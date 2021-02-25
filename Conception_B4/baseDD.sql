@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de création :  25/02/2021 15:56:31                      */
+/* Date de création :  25/02/2021 16:46:16                      */
 /*==============================================================*/
 
 
@@ -40,7 +40,6 @@ create table ADMIN
 create table CLASSE_ETD
 (
    ID_CLASSE_ETD        int not null,
-   ID_ETUDIANT          int,
    ID_FORMATEUR         int not null,
    NOM                  char(10),
    primary key (ID_CLASSE_ETD)
@@ -52,6 +51,7 @@ create table CLASSE_ETD
 create table ETUDIANT
 (
    ID_ETUDIANT          int not null,
+   ID_CLASSE_ETD        int not null,
    primary key (ID_ETUDIANT)
 );
 
@@ -121,11 +121,11 @@ create table PRESSON_ETUD
    primary key (ID_ETUDIANT, ID_PERSON)
 );
 
-alter table CLASSE_ETD add constraint FK_CLASSE_ETUDIANT foreign key (ID_ETUDIANT)
-      references ETUDIANT (ID_ETUDIANT) on delete restrict on update restrict;
-
 alter table CLASSE_ETD add constraint FK_CLASSE_FORMATEUR2 foreign key (ID_FORMATEUR)
       references FORMATEUR (ID_FORMATEUR) on delete restrict on update restrict;
+
+alter table ETUDIANT add constraint FK_CLASSE_ETUDIANT foreign key (ID_CLASSE_ETD)
+      references CLASSE_ETD (ID_CLASSE_ETD) on delete restrict on update restrict;
 
 alter table NOTES add constraint FK_AFFECTER foreign key (ID_FORMATEUR)
       references FORMATEUR (ID_FORMATEUR) on delete restrict on update restrict;
